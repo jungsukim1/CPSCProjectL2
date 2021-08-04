@@ -2,10 +2,13 @@ package codes;
 
 import java.util.ArrayList;
 
+import javafx.scene.image.Image;
+
 public class Card {
 	private String NAME = "";
 	private ArrayList<Integer> VALUE = new ArrayList<Integer>();
 	private String SUIT = "";
+	private Image image;
 	
 	/**
 	 * 
@@ -23,6 +26,10 @@ public class Card {
 		else {
 			this.VALUE.add(value);
 		}
+		
+		String filename = name + "_of_" + suit + ".png";
+		image = new Image("/Cards/"+filename);
+		
 	}
 	
 	public ArrayList<Integer> getValue(){
@@ -35,6 +42,10 @@ public class Card {
 	
 	public String getName() {
 		return NAME;
+	}
+	
+	public Image getCardImage() {
+		return image;
 	}
 	
 	public String toString() {

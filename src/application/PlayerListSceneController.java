@@ -187,7 +187,7 @@ public class PlayerListSceneController implements Initializable{
 	}
 	
 	//nextButton
-	public void createPlayers(ActionEvent event) {
+	public void createPlayers(ActionEvent event) throws IOException {
 		ArrayList<Player> players = new ArrayList<Player>();
 		for (int i = 0; i < y.getNumOfPlayers(); i ++) {
 			if(AI.get(i).isSelected()) {
@@ -199,8 +199,12 @@ public class PlayerListSceneController implements Initializable{
 			}
 		}
 		y.setPlayers(players);
-		for(Player i : y.getPlayers()) {
-			System.out.println(i.getName() + " money: " +i.getMoney() + "AI: " + i.isHuman());
-		}
+		
+		root = FXMLLoader.load(getClass().getResource("PlayOrNo.fxml"));
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+		
 	}
 }

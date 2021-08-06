@@ -9,6 +9,7 @@ public abstract class Player {
 	private ArrayList<Hand> HANDS= new ArrayList<Hand>();
 	
 	private Boolean PLAY = null;
+	private Boolean Split = false;
 	
 	protected Boolean HUMAN;
 	protected Deck DECK;
@@ -37,6 +38,7 @@ public abstract class Player {
 	public void setup() {
 		Hand hand = new Hand(DECK, this);
 		HANDS.add(hand);
+		Split = false;
 	}
 	
 	//use when drawing out cards
@@ -80,7 +82,8 @@ public abstract class Player {
 	public void splitHand() throws Exception {
 		try {
 			Hand splitHand = new Hand(DECK, this, HANDS.get(0).split());
-			HANDS.add(splitHand);
+			HANDS.add(1, splitHand);
+			this.Split = true;
 		}
 		catch(Exception e) {
 			throw new Exception("You cannot split right now.");
@@ -133,6 +136,9 @@ public abstract class Player {
 	public String toString() {
 		return "Player name: " + getName() + "\nMoney: " + getMoney() + "\nIs human: " + isHuman() +
 				"\nHands: " + getHands(); 
+	}
+	public Boolean getSplit() {
+		return Split;
 	}
 	
 	

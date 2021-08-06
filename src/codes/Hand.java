@@ -8,11 +8,13 @@ public class Hand {
 	private ArrayList<Card> HAND = new ArrayList<Card>();
 	private Deck DECK;
 	private Player PLAYER;
+	private boolean FINISHED;
 	
 	public Hand(Deck deck, Player player) {
 		this.DECK = deck;
 		this.BET_AMOUNT = 0;
 		this.PLAYER = player;
+		this.FINISHED = false;
 	}
 	
 	public Hand(Deck deck, Dealer dealer) {
@@ -121,6 +123,13 @@ public class Hand {
 	
 	public void allIn() {
 		BET_AMOUNT = PLAYER.getMoney();
+	}
+	
+	public void isFinished() {
+		this.FINISHED = true;
+	}
+	public boolean getIsFinished() {
+		return FINISHED;
 	}
 	
 	public void win() {

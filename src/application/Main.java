@@ -19,6 +19,7 @@ public class Main extends Application {
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 			primaryStage.show();
 			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import codes.Card;
+import codes.Hand;
 import codes.Player;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
@@ -45,11 +46,8 @@ public class PlayerTransitionController implements Initializable{
 	private Label name1, name2, name3, name4, name5, name6, name7, name8;
 	@FXML
 	private Label money1, money2, money3, money4, money5, money6, money7, money8;
-	@FXML
-	private Label bet1, bet2, bet3, bet4, bet5, bet6, bet7, bet8;
 	private ArrayList <Label> nameLabel = new ArrayList<Label>();
 	private ArrayList <Label> moneyLabel = new ArrayList<Label>();
-	private ArrayList <Label> betLabel = new ArrayList<Label>();
 	
 	@FXML
 	private Label userName;
@@ -117,21 +115,31 @@ public class PlayerTransitionController implements Initializable{
 	//after showing the ending round results, if press continue we setup the dealer again (refresh its hand and adds in a new instance of a hand)
 	//if the 50% or more of the deck is used, it refreshes the deck and reshuffles
 	public void continueGame(ActionEvent event) throws Exception {
+		tracker.updatePlayers();
 		tracker.getDealer().clearHand();
 		tracker.getDealer().setup();
-		for(Player p : players) {
-			p.clearHands();
+		if(tracker.getNumOfPlayers() != 0) {
+			for(Player p : players) {
+				p.clearHands();
+			}
+			if(tracker.getDeck().getPercentageOfUsed() > 50) {
+				System.out.println("More than 50% of the deck was used.\nReshuffling deck...\n");
+				tracker.getDeck().resetDeck();
+			}
+			
+			root = FXMLLoader.load(getClass().getResource("PlayOrNo.fxml"));
+			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
 		}
-		if(tracker.getDeck().getPercentageOfUsed() > 50) {
-			System.out.println("More than 50% of the deck was used.\nReshuffling deck...\n");
-			tracker.getDeck().resetDeck();
+		else {
+			root = FXMLLoader.load(getClass().getResource("EndScreen.fxml"));
+			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
 		}
-		
-		root = FXMLLoader.load(getClass().getResource("PlayOrNo.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
 	}
 	//showing the dealer cards at the end of the round
 	private void showDealerCards() throws InterruptedException {
@@ -164,6 +172,29 @@ public class PlayerTransitionController implements Initializable{
 		dealerHand = tracker.getDealer().getHand();
 		dealerScene.setVisible(true);
 		showDealerCards();
+		for (Player p : players) {
+			double wonOrLostAmount = 0;
+			if(p.getPlay()) {
+				for(Hand h : p.getHands()) {
+					if(h.getHandValue() == tracker.getDealer().getHandValue() ) {
+						wonOrLostAmount += 0;
+					}
+					else if(h.getHandValue() > tracker.getDealer().getHandValue() && h.getHandValue() <= 21) {
+						h.win();
+						wonOrLostAmount += h.getBetAmount();
+					}
+					else if (tracker.getDealer().getHandValue() > 21 && h.getHandValue() <= 21 ) {
+						h.win();
+						wonOrLostAmount += h.getBetAmount();
+					}
+					else {
+						h.lose();
+						wonOrLostAmount -= h.getBetAmount();
+					}
+				}
+			}
+		}
+
 	}
 	
 	
@@ -182,24 +213,20 @@ public class PlayerTransitionController implements Initializable{
 	public void setRoundOverScene() {
 		for (int i = 0; i < 8; i ++) {
 			nameLabel.get(i).setVisible(false);
-			betLabel.get(i).setVisible(false);
 			moneyLabel.get(i).setVisible(false);
 		}
 		for (int i = 0; i < tracker.getNumOfPlayers(); i ++) {
 			nameLabel.get(i).setText(players.get(i).getName());
 			moneyLabel.get(i).setText("$"+String.valueOf((int)players.get(i).getMoney()));
-			betLabel.get(i).setText("(Lost $100)");
 			
 			nameLabel.get(i).setVisible(true);
 			moneyLabel.get(i).setVisible(true);
-			betLabel.get(i).setVisible(true);
 		}
 	}
 	//setting up the arrays to be used in initialize
 	public void setupTheLabelArrays() {
 		nameLabel.clear();
 		moneyLabel.clear();
-		betLabel.clear();
 		nameLabel.add(name1);
 		nameLabel.add(name2);
 		nameLabel.add(name3);
@@ -216,14 +243,6 @@ public class PlayerTransitionController implements Initializable{
 		moneyLabel.add(money6);
 		moneyLabel.add(money7);
 		moneyLabel.add(money8);
-		betLabel.add(bet1);
-		betLabel.add(bet2);
-		betLabel.add(bet3);
-		betLabel.add(bet4);
-		betLabel.add(bet5);
-		betLabel.add(bet6);
-		betLabel.add(bet7);
-		betLabel.add(bet8);
 	}
 
 }

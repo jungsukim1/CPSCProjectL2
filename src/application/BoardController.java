@@ -104,6 +104,7 @@ public class BoardController implements Initializable{
 		
 		showDealerCard();
 		showInitialPlayerCards();
+		System.out.println(player);
 	}
 	
 	//hit method when the player has split the hand
@@ -240,7 +241,9 @@ public class BoardController implements Initializable{
 	
 	//splits the hand
 	public void split(ActionEvent event) throws Exception {
+		
 		int bet = (int)hands.get(0).getBetAmount();
+		if(bet*2 <= player.getMoney()) {
 		player.splitHand();
 		player.splitHandBet(bet);
 		root = FXMLLoader.load(getClass().getResource("Board.fxml"));
@@ -248,6 +251,10 @@ public class BoardController implements Initializable{
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+		}
+		else {
+			throw new Exception("The split bet amount (initial bet * 2) is greater than the total amount that the player has right now.");
+		}
 	}
 	
 	//continue method once the player is done its turn
@@ -384,12 +391,4 @@ public class BoardController implements Initializable{
 			handValueLabel.setText(Integer.toString(hands.get(handIndex).getHandValue()));
 		}
 	}
-	
-	
-	
-	
-	
-
-	
-	
 }

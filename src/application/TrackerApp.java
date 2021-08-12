@@ -64,6 +64,18 @@ public class TrackerApp {
 		return dealer;
 	}
 	
+	//updates the players that are playing every round (if they have no more money, they are kicked from the table)
+	public void updatePlayers() {
+		ArrayList<Player> copyArray = new ArrayList<Player>(); 
+		copyArray = (ArrayList<Player>) players.clone(); //makes a clone so that it points to something different when deleting elements
+		for (Player player : copyArray) {
+			if((int)player.getMoney() <= 0) {
+				players.remove(player);
+			}
+		}
+		numOfPlayers = players.size(); //updates the number of players to the new one
+	}
+	
 	//pointer to right player to ask if they want to play
 	public int getWhosPlaying() {
 		return whosPlaying;

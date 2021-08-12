@@ -113,12 +113,7 @@ public class Hand {
 	
 	//use after canDouble()
 	public void doubleDown() throws Exception {
-		if(BET_AMOUNT * 2 <= PLAYER.getMoney()) {
-		BET_AMOUNT = BET_AMOUNT * 2;
-		}
-		else {
-			throw new Exception("The betting amount is greater than the total amount that the player has right now.");
-		}
+		bet(BET_AMOUNT*2);
 	}
 	
 	public void allIn() {

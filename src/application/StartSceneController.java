@@ -38,7 +38,7 @@ public class StartSceneController implements Initializable{
 	
 	private TrackerApp x = TrackerApp.getInstance();
 
-	
+	//sets up the spinners with values that we need
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ObservableList<Integer> list = FXCollections.observableArrayList(1,2,4,5,6,7,8);
@@ -68,6 +68,8 @@ public class StartSceneController implements Initializable{
 		});
 	}
 	//Continue button
+	//sets the # of decks used and # of players playing
+	//then switches the scene
 	public void switchToPlayerListScene(ActionEvent event) throws Exception {
 		x.setNumOfDecks(getDeckNumber());
 		x.setNumOfPlayers(getPlayerNumber());
@@ -82,6 +84,7 @@ public class StartSceneController implements Initializable{
 		
 	}
 	
+	//exit button
 	public void exit(ActionEvent event) {
 	    Stage stage = (Stage) exitButton.getScene().getWindow();
 	    stage.close();

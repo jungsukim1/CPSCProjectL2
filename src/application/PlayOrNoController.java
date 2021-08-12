@@ -49,7 +49,7 @@ public class PlayOrNoController implements Initializable{
 	private Button okButton;
 	
 	
-
+	//initializes the proper buttons to be set visible or disabled
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		betSlider.setVisible(false);
@@ -63,7 +63,9 @@ public class PlayOrNoController implements Initializable{
 		userName.setText(players.get(indexOfPlayer).getName());
 	}
 		
-		
+	//if every player has been asked if they want to play or not, it then draws out the cards to whos playing
+	// and switches the scene
+	//if everyone has not been asked, it initializes this screen again
 	public void yesOrNo(ActionEvent event) throws IOException {
 		if(tracker.getWhosPlaying() == tracker.getNumOfPlayers()-1) {
 			tracker.resetWhosPlaying();
@@ -89,9 +91,13 @@ public class PlayOrNoController implements Initializable{
 			stage.show();
 		}
 	}
+	
+	//linked to the yes button
+	//if the player decides to play, then the bet slider appears and asks how much are they betting
 	public void yes(ActionEvent event) throws IOException {
 		int indexOfPlayer = tracker.getWhosPlaying();
 		Player player = players.get(indexOfPlayer);
+		player.playOrNo(true);
 		
 		questionLabel.setVisible(false);
 		questionLabel1.setVisible(true);
@@ -105,6 +111,7 @@ public class PlayOrNoController implements Initializable{
 		betSlider.setMin(1);
 		betSlider.setMax(player.getMoney());
 		betSlider.setValue(player.getMoney());
+		initialBetValue = (int) player.getMoney();
 		
 		betSlider.valueProperty().addListener(new ChangeListener<Number>(){
 			@Override
@@ -115,6 +122,8 @@ public class PlayOrNoController implements Initializable{
 		});
 		
 	}
+	//linked to the no button
+	//if the player decides not to play then it goes to the next player in line
 	public void no(ActionEvent event) throws IOException {
 		int indexOfPlayer = tracker.getWhosPlaying();
 		Player player = players.get(indexOfPlayer);
@@ -122,6 +131,7 @@ public class PlayOrNoController implements Initializable{
 		yesOrNo(event);
 	}
 	
+	//after the player chooses to play and bets their initial amount, it sets up the player for the round
 	public void ok(ActionEvent event) throws Exception {
 		int indexOfPlayer = tracker.getWhosPlaying();
 		Player player = players.get(indexOfPlayer);

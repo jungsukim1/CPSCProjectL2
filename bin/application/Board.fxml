@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: SEAGREEN;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.BoardController">
+   <children>
+      <AnchorPane fx:id="boardScene" prefHeight="720.0" prefWidth="1280.0">
+         <children>
+            <Label fx:id="userName" layoutX="14.0" layoutY="89.0" prefHeight="47.0" prefWidth="639.0">
+               <font>
+                  <Font name="System Bold Italic" size="32.0" />
+               </font>
+            </Label>
+            <Label layoutX="18.0" layoutY="136.0" text="is playing ">
+               <font>
+                  <Font name="System Bold Italic" size="32.0" />
+               </font>
+            </Label>
+            <Button fx:id="exitButton" layoutX="1209.0" layoutY="28.0" mnemonicParsing="false" onAction="#exit" text="Exit" />
+            <Button fx:id="hitButton" layoutX="954.0" layoutY="637.0" mnemonicParsing="false" onAction="#hit" text="HIT" />
+            <Button fx:id="standButton" layoutX="1012.0" layoutY="637.0" mnemonicParsing="false" onAction="#stand" text="STAND" />
+            <Button fx:id="doubleButton" layoutX="1086.0" layoutY="637.0" mnemonicParsing="false" onAction="#doubleDown" text="DOUBLE" />
+            <Button fx:id="splitButton" layoutX="1165.0" layoutY="637.0" mnemonicParsing="false" onAction="#split" text="SPLIT" />
+            <Button fx:id="continueButton" layoutX="257.0" layoutY="654.0" mnemonicParsing="false" onAction="#continueMethod" prefHeight="25.0" prefWidth="73.0" text="Continue" />
+            <Label fx:id="overLabel" layoutX="14.0" layoutY="638.0" prefHeight="56.0" prefWidth="243.0" text="Turn is over!">
+               <font>
+                  <Font name="System Bold Italic" size="39.0" />
+               </font>
+            </Label>
+            <Label fx:id="jackPotLabel" layoutX="14.0" layoutY="639.0" prefHeight="56.0" prefWidth="243.0" text="BLACKJACK!">
+               <font>
+                  <Font name="System Bold Italic" size="39.0" />
+               </font>
+            </Label>
+            <Label layoutX="957.0" layoutY="679.0" prefHeight="17.0" prefWidth="73.0" text="Hand Value:">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="handValueLabel" layoutX="1039.0" layoutY="679.0" prefHeight="17.0" prefWidth="73.0">
+               <font>
+                  <Font name="System Bold Italic" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
